@@ -13,7 +13,8 @@ const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: "full"}, // pathMatch is used to indicate that it should be redirected ONLY if the path is '', with no other content after.
   {path: 'home', component: HomeComponent},
   {
-    path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [
+    // path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [ <- canActivate will protect the route and its children
+    path: 'servers', canActivateChild: [AuthGuard], component: ServersComponent, children: [ // canActivateChild will only protect the children, not the parent route
       {path: ':id', component: ServerComponent},
       {path: ':id/edit', component: EditServerComponent},
     ]
