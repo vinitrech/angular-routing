@@ -10,9 +10,11 @@ import {EditServerComponent} from './servers/edit-server/edit-server.component';
 import {ServerComponent} from './servers/server/server.component';
 import {ServersService} from './servers/servers.service';
 import {RouterModule, Routes} from "@angular/router";
+import {PageNotFoundComponent} from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', redirectTo: '/home', pathMatch: "full"}, // pathMatch is used to indicate that it should be redirected ONLY if the path is '', with no other content after.
+  {path: 'home', component: HomeComponent},
   {
     path: 'servers', component: ServersComponent, children: [
       {path: ':id', component: ServerComponent},
@@ -24,6 +26,12 @@ const appRoutes: Routes = [
       {path: ':id/:name', component: UserComponent}
     ]
   },
+  {
+    path: "not-found", component: PageNotFoundComponent
+  },
+  {
+    path: "**", redirectTo: '/not-found' // this path should always be declared at the end
+  },
 ]
 
 @NgModule({
@@ -34,7 +42,8 @@ const appRoutes: Routes = [
     ServersComponent,
     UserComponent,
     EditServerComponent,
-    ServerComponent
+    ServerComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
