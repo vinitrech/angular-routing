@@ -7,12 +7,13 @@ import {UsersComponent} from "./users/users.component";
 import {UserComponent} from "./users/user/user.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import {NgModule} from "@angular/core";
+import {AuthGuard} from "./auth-guard.service";
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: "full"}, // pathMatch is used to indicate that it should be redirected ONLY if the path is '', with no other content after.
   {path: 'home', component: HomeComponent},
   {
-    path: 'servers', component: ServersComponent, children: [
+    path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [
       {path: ':id', component: ServerComponent},
       {path: ':id/edit', component: EditServerComponent},
     ]
@@ -36,4 +37,5 @@ const appRoutes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule{}
+export class AppRoutingModule {
+}
