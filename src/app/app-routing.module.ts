@@ -42,6 +42,9 @@ const appRoutes: Routes = [
 
 @NgModule({
   imports: [
+    // Sometimes, the server will handle the urls before angular has a chance to handle them, returning a 404 error.
+    // In this case, the web server must be configured to return the index.html (where the angular app is) file in case of errors while parsing the urls
+    // If this is note possible, there is an alternative: RouterModule.forRoot(appRoutes, {useHash: true}) <- useHash will inform the web server to not worry about routes after '#', because they are handled by angular.
     RouterModule.forRoot(appRoutes)
   ],
   exports: [RouterModule],
