@@ -16,23 +16,27 @@ export class ServerComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id: number = Number(this.activatedRoute.snapshot.params['id'])
-    const returnedServer = this.serversService.getServer(id);
+    // const id: number = Number(this.activatedRoute.snapshot.params['id'])
+    // const returnedServer = this.serversService.getServer(id);
+    //
+    // if(returnedServer !== undefined){
+    //   this.server = returnedServer
+    // }
+    //
+    // this.activatedRoute.params.subscribe((params) => {
+    //   const returnedServer = this.serversService.getServer(Number(params['id']));
+    //
+    //   if(returnedServer !== undefined){
+    //     this.server = returnedServer;
+    //   }
+    // })
 
-    if(returnedServer !== undefined){
-      this.server = returnedServer
-    }
-
-    this.activatedRoute.params.subscribe((params) => {
-      const returnedServer = this.serversService.getServer(Number(params['id']));
-
-      if(returnedServer !== undefined){
-        this.server = returnedServer;
-      }
-    })
+    this.activatedRoute.data.subscribe((data) => {
+      this.server = data['resolver']
+    });
   }
 
-  onEdit(){
+  onEdit() {
     this.router.navigate(['edit'], {relativeTo: this.activatedRoute, queryParamsHandling: 'preserve'}) // make sure the query params are kept upon navigation
   }
 

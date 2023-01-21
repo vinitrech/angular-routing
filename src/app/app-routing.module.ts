@@ -10,6 +10,7 @@ import {NgModule} from "@angular/core";
 import {AuthGuard} from "./auth-guard.service";
 import {CanDeactivateGuard} from "./servers/edit-server/can-deactivate-guard.service";
 import {ErrorPageComponent} from "./error-page/error-page.component";
+import {ServerResolver} from "./servers/server/server-resolver.service";
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: "full"}, // pathMatch is used to indicate that it should be redirected ONLY if the path is '', with no other content after.
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
   {
     // path: 'servers', canActivate: [AuthGuard], component: ServersComponent, children: [ <- canActivate will protect the route and its children
     path: 'servers', canActivateChild: [AuthGuard], component: ServersComponent, children: [ // canActivateChild will only protect the children, not the parent route
-      {path: ':id', component: ServerComponent},
+      {path: ':id', component: ServerComponent, resolve: {resolver: ServerResolver}},
       {path: ':id/edit', component: EditServerComponent, canDeactivate: [CanDeactivateGuard]},
     ]
   },
